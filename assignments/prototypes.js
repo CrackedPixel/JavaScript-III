@@ -156,5 +156,23 @@ Humanoid.prototype.greet = function() {
   });
 
   Humanoid.prototype.attackWith = function(weapon, target){
-
+    if (this.healthPoints <= 0) return;
+    target.healthPoints-=5;
+    console.log(this.name + " attacks " + target.name + " with his " + weapon);
+    target.checkHealth();
   };
+
+  Humanoid.prototype.checkHealth = function(){
+    if (this.healthPoints <= 0){
+      console.log(this.name + " has fallen.");
+    }
+  }
+
+  while (Hero.healthPoints > 0 && Villain.healthPoints > 0){
+    if (Villain.healthPoints === 5){
+      Hero.attackWith(Hero.weapons[1], Villain);
+    }else{
+      Hero.attackWith(Hero.weapons[0], Villain);
+    }
+    Villain.attackWith(Villain.weapons[Math.round(Math.random())], Hero);
+  }
